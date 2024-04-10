@@ -1,0 +1,19 @@
+.form {
+  width: 426px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons .reset {
+  background: #fff;
+  color: #ff5000;
+  border: #ff5000 solid 1px;
+}
