@@ -1,24 +1,56 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from './Form.module.css';
 import Button from './UI/Button';
 import Input from './UI/Input';
 import {inputValidation, setMaskForPhone} from '../utils/input-validation';
+import useHttp from '../hooks/use-http';
+import {addRecord} from '../utils/firebase-api';
+import Loader from './UI/Loader';
 
-const inputOptions = [
-  {name: 'first_name', type: 'text', label: 'Їм’я'},
-  {name: 'last_name', type: 'text', label: 'Прізвище'},
-  {name: 'birthday', type: 'date', label: 'Дата народження'},
-  {name: 'email', type: 'email', label: 'Email'},
-  {
-    name: 'phone',
-    type: 'text',
-    label: 'Номер телефону',
-    placeholder: '+380 (__) ___- __-__',
-    setMask: setMaskForPhone,
-  },
-];
+const Form = ({
+  refreshList,
+  toggleFormVisibility,
+  initialValueForInputs,
+  nameSubmitButton,
+}) => {
+  const inputOptions = [
+    {
+      name: 'first_name',
+      type: 'text',
+      label: 'Їм’я',
+      value: initialValueForInputs.first_name,
+      // autoFocus: true,
+    },
+    {
+      name: 'last_name',
+      type: 'text',
+      label: 'Прізвище',
+      value: initialValueForInputs.last_name,
+    },
+    {
+      name: 'birthday',
+      type: 'date',
+      label: 'Дата народження',
+      value: initialValueForInputs.birthday,
+    },
+    {
+      name: 'email',
+      type: 'email',
+      label: 'Email',
+      value: initialValueForInputs.email,
+    },
+    {
+      name: 'phone',
+      type: 'text',
+      label: 'Номер телефону',
+      value: initialValueForInputs.phone,
+      placeholder: '+380 (__) ___- __-__',
+      setMask: setMaskForPhone,
+    },
+  ];
 
-const Form = props => {
+  const {sendHttpRequest, status, error} = useHttp(addRecord);
+
   const [areInputsTouched, setAreInputTouched] = useState(false);
   const formData = {};
   let isFormValid = false;
@@ -42,9 +74,19 @@ const Form = props => {
       setAreInputTouched(true);
       return;
     }
-    console.log(formData);
-    props.toggleFormVisibility();
+    const newRecord = {};
+    for (let key in formData) {
+      newRecord[key] = formData[key].value;
+    }
+    sendHttpRequest(newRecord);
   };
+
+  useEffect(() => {
+    if (status === 'completed' && !error) {
+      toggleFormVisibility();
+      refreshList();
+    }
+  }, [error, status, refreshList, toggleFormVisibility]);
 
   const inputs = inputOptions.map(item => (
     <Input
@@ -56,16 +98,29 @@ const Form = props => {
     />
   ));
 
+  if (error) {
+    return (
+      <p>
+        {error}
+        <br />
+        Не вдалося додати користувача
+      </p>
+    );
+  }
+
   return (
-    <form className={styles.form} noValidate onSubmit={submitHandler}>
-      {inputs}
-      <div className={styles.buttons}>
-        <Button className={styles.reset} onClick={props.toggleFormVisibility}>
-          Скасувати
-        </Button>
-        <Button type='submit'>Додати</Button>
-      </div>
-    </form>
+    <>
+      <form className={styles.form} noValidate onSubmit={submitHandler}>
+        {inputs}
+        <div className={styles.buttons}>
+          <Button className={styles.reset} onClick={toggleFormVisibility}>
+            Скасувати
+          </Button>
+          <Button type='submit'>{nameSubmitButton}</Button>
+        </div>
+      </form>
+      {status === 'pending' && <Loader />}
+    </>
   );
 };
 

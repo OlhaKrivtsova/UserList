@@ -1,4 +1,4 @@
-.inputGroup {
+.input-group {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -6,21 +6,21 @@
   gap: 10px;
 }
 
-.inputGroup input {
+.input-group input {
   width: 100%;
   padding-left: 7px;
   border: 1px solid #000;
   height: 38px;
 }
 
-.inputGroup input.failed {
+.input-group input.failed {
   border: 1px solid #ff5000;
   background-color: #ff500010;
 }
 
-.inputGroup p {
+.input-group p {
   color: #ff5000;
 }
 
-/* .inputGroup label {
+/* .input-group label {
 } */

@@ -7,11 +7,12 @@ const Input = ({
   setMask = null,
   update,
   label,
+  value,
   type = 'text',
   name,
   ...props
 }) => {
-  const [enteredValue, setEnteredValue] = useState('');
+  const [enteredValue, setEnteredValue] = useState(value);
   const [isInputTouched, setIsInputTouched] = useState(isTouched);
   const {isValueValid, errMessage} = inputValidation(enteredValue, name, label);
   const isInputInvalid = !isValueValid && isInputTouched;
@@ -42,7 +43,7 @@ const Input = ({
   // };
 
   return (
-    <div className={styles.inputGroup}>
+    <div className={styles['input-group']}>
       <label htmlFor={name}>{label}</label>
       <input
         className={inputClassName}

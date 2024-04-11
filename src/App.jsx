@@ -1,23 +1,19 @@
 import {useState} from 'react';
-import styles from './App.module.css';
-import Form from './components/Form';
-import Button from './components/UI/Button';
+import SectionAddUser from './components/layout/AddUserSection';
+import SectionUserList from './components/layout/UserListSection';
 
 const App = () => {
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const toggleFormVisibility = () => {
-    setIsFormVisible(prev => !prev);
+  const [refresh, setRefresh] = useState(1);
+
+  const refreshListHandler = () => {
+    setRefresh(prev => -prev);
   };
 
   return (
-    <section className={styles.sectionAddUser}>
-      {!isFormVisible && (
-        <Button className={styles.form__button} onClick={toggleFormVisibility}>
-          Додати користувача
-        </Button>
-      )}
-      {isFormVisible && <Form toggleFormVisibility={toggleFormVisibility} />}
-    </section>
+    <>
+      <SectionAddUser refreshList={refreshListHandler} />
+      <SectionUserList refresh={refresh} />
+    </>
   );
 };
 
