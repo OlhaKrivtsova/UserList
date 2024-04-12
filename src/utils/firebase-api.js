@@ -1,8 +1,8 @@
 const FIREBASE_ROOT_DOMAIN =
-  'https://user-list-13cb8-default-rtdb.firebaseio.com/users.json';
+  'https://user-list-13cb8-default-rtdb.firebaseio.com';
 
 export async function addRecord(recordData) {
-  const response = await fetch(`${FIREBASE_ROOT_DOMAIN}`, {
+  const response = await fetch(`${FIREBASE_ROOT_DOMAIN}/users.json`, {
     method: 'POST',
     body: JSON.stringify(recordData),
     headers: {
@@ -18,8 +18,28 @@ export async function addRecord(recordData) {
   }
 }
 
+export async function editRecord(recordData) {
+  const key = recordData.id;
+  delete recordData.id;
+
+  const response = await fetch(`${FIREBASE_ROOT_DOMAIN}/users/${key}.json`, {
+    method: 'PUT',
+    body: JSON.stringify(recordData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.message || `Record adding error, status ${response.status}.`
+    );
+  }
+}
+
 export async function getAllRecords() {
-  const response = await fetch(`${FIREBASE_ROOT_DOMAIN}`);
+  const response = await fetch(`${FIREBASE_ROOT_DOMAIN}/users.json`);
   const data = await response.json();
 
   if (!response.ok) {

@@ -1,3 +1,4 @@
+/* Reset styles */
 * {
   padding: 0px;
   margin: 0px;
@@ -48,7 +49,7 @@ ul li {
 }
 
 img {
-  /* vertical-align: top; */
+  vertical-align: top;
   display: inline-block;
   object-fit: cover;
 }
@@ -105,7 +106,12 @@ button::-moz-focus-inner {
 label {
   cursor: pointer;
 }
+/* Base style */
 
+:root {
+  --main-color: #ff5000;
+  --main-transparent-color: #ff500035;
+}
 body {
   font-family: Helvetica, sans-serif;
   font-size: 16px;

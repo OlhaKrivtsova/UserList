@@ -1,15 +1,14 @@
+import UserItem from './UserItem';
 import styles from './UserList.module.css';
 
-const UserList = ({users}) => {
+const UserList = ({users, refreshList}) => {
   if (!users[0])
     return <p className={styles['not-found']}>Користувачів не знайдено</p>;
 
   const list = users.map(item => (
-    <li key={item.id}>
-      {item.first_name} {item.last_name}
-    </li>
+    <UserItem key={item.id} user={item} refreshList={refreshList} />
   ));
-  return <ul>{list}</ul>;
+  return <ul className={styles.row}>{list}</ul>;
 };
 
 export default UserList;

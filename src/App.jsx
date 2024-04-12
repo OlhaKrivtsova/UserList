@@ -3,16 +3,19 @@ import SectionAddUser from './components/layout/AddUserSection';
 import SectionUserList from './components/layout/UserListSection';
 
 const App = () => {
-  const [refresh, setRefresh] = useState(1);
+  const [shouldRefresh, setShouldRefresh] = useState(1);
 
   const refreshListHandler = () => {
-    setRefresh(prev => -prev);
+    setShouldRefresh(prev => -prev);
   };
 
   return (
     <>
       <SectionAddUser refreshList={refreshListHandler} />
-      <SectionUserList refresh={refresh} />
+      <SectionUserList
+        shouldRefresh={shouldRefresh}
+        refreshList={refreshListHandler}
+      />
     </>
   );
 };

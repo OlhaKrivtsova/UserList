@@ -4,13 +4,14 @@ import Button from './UI/Button';
 import Input from './UI/Input';
 import {inputValidation, setMaskForPhone} from '../utils/input-validation';
 import useHttp from '../hooks/use-http';
-import {addRecord} from '../utils/firebase-api';
+
 import Loader from './UI/Loader';
 
 const Form = ({
   refreshList,
   toggleFormVisibility,
   initialValueForInputs,
+  firebaseFunction,
   nameSubmitButton,
 }) => {
   const inputOptions = [
@@ -49,7 +50,7 @@ const Form = ({
     },
   ];
 
-  const {sendHttpRequest, status, error} = useHttp(addRecord);
+  const {sendHttpRequest, status, error} = useHttp(firebaseFunction);
 
   const [areInputsTouched, setAreInputTouched] = useState(false);
   const formData = {};
@@ -78,6 +79,8 @@ const Form = ({
     for (let key in formData) {
       newRecord[key] = formData[key].value;
     }
+    if (initialValueForInputs.id) newRecord.id = initialValueForInputs.id;
+
     sendHttpRequest(newRecord);
   };
 

@@ -4,6 +4,7 @@ import Container from '../UI/Container';
 import Button from '../UI/Button';
 import Form from '../Form';
 import Modal from '../UI/Modal';
+import {addRecord} from '../../utils/firebase-api';
 
 const SectionAddUser = ({refreshList}) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -29,6 +30,7 @@ const SectionAddUser = ({refreshList}) => {
                 email: '',
                 phone: '',
               }}
+              firebaseFunction={addRecord}
               nameSubmitButton='Додати'
             />
           </Modal>
