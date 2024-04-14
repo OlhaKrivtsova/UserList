@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import styles from './Input.module.css';
+import styles from './FormInput.module.css';
 
 const Input = ({
   isTouched,

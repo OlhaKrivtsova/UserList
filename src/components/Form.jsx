@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import styles from './Form.module.css';
 import Button from './UI/Button';
-import Input from './UI/Input';
+import Input from './FormInput';
 import {inputValidation, setMaskForPhone} from '../utils/input-validation';
 import useHttp from '../hooks/use-http';
 
@@ -18,7 +18,7 @@ const Form = ({
     {
       name: 'first_name',
       type: 'text',
-      label: 'Їм’я',
+      label: 'Ім’я',
       value: initialValueForInputs.first_name,
       // autoFocus: true,
     },

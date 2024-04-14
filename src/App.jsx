@@ -10,13 +10,13 @@ const App = () => {
   };
 
   return (
-    <>
+    <main>
       <SectionAddUser refreshList={refreshListHandler} />
       <SectionUserList
         shouldRefresh={shouldRefresh}
         refreshList={refreshListHandler}
       />
-    </>
+    </main>
   );
 };
 

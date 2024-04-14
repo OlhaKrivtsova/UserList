@@ -56,7 +56,7 @@ export async function getAllRecords() {
       ...data[key],
     };
 
-    convertedRecords.push(record);
+    convertedRecords.unshift(record);
   }
 
   return convertedRecords;

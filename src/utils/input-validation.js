@@ -67,7 +67,7 @@ export const inputValidation = (val, inputName, labelName) => {
 
   if (inputName === 'birthday') {
     const minAge = 14;
-    const maxAge = 100;
+    const maxAge = 120;
     const dateValue = new Date(val);
 
     if (dateValue.getTime() > Date.now())
@@ -86,7 +86,7 @@ export const inputValidation = (val, inputName, labelName) => {
     if (age >= maxAge)
       return {
         isValueValid: false,
-        errMessage: 'Користувач старший за 100 років',
+        errMessage: 'Користувач старший за 120 років',
       };
   }
 

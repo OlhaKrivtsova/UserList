@@ -1,0 +1,40 @@
+.pagination {
+  /* width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0; */
+  height: 40px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: var(--main-color) solid 1px;
+  color: var(--main-color);
+}
+
+.pagination input {
+  /* width: 50px; */
+  height: 30px;
+  padding: 0 5px;
+  margin-left: 10px;
+  border: var(--main-color) solid 1px;
+  border-radius: 3px;
+}
+.pages {
+  display: flex;
+}
+
+.page {
+  width: 30px;
+  height: 30px;
+  /* border: solid black 1px; */
+}
+
+.page:hover {
+  background: var(--main-transparent-color);
+}
+
+.page.active {
+  background: var(--main-color);
+  color: #fff;
+}

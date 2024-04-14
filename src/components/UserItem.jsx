@@ -19,7 +19,9 @@ const UserItem = ({user, refreshList}) => {
         <p>{user.last_name}</p>
         <p>
           {new Date(user.birthday).toLocaleString('uk', {
-            dateStyle: 'medium',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
           })}
         </p>
         <p>{user.email}</p>

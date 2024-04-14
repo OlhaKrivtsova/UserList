@@ -112,6 +112,7 @@ label {
   --main-color: #ff5000;
   --main-transparent-color: #ff500035;
 }
+
 body {
   font-family: Helvetica, sans-serif;
   font-size: 16px;
@@ -119,4 +120,8 @@ body {
   background-color: #ffffff;
   color: #100f0f;
   overflow-anchor: auto;
+}
+main {
+  height: 100vh;
+  padding: 30px 0;
 }

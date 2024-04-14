@@ -8,7 +8,7 @@ const UserList = ({users, refreshList}) => {
   const list = users.map(item => (
     <UserItem key={item.id} user={item} refreshList={refreshList} />
   ));
-  return <ul className={styles.row}>{list}</ul>;
+  return <ul className={styles.list}>{list}</ul>;
 };
 
 export default UserList;
