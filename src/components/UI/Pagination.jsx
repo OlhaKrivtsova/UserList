@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import styles from './Pagination.module.css';
-import Container from './Container';
 
 const initialPageNumber = 1;
 const initialAmountOfRecordsOnPage = 3;
@@ -27,8 +26,10 @@ const Pagination = ({totalAmountOfRecords, setRangOfRecords}) => {
     setPageNumber(+event.target.textContent);
   };
 
-  const changeInputHandler = event => {
-    setAmountOfRecordsOnPage(+event.target.value || totalAmountOfRecords);
+  const changeAmountHandler = event => {
+    setAmountOfRecordsOnPage(
+      +event.target.value || initialAmountOfRecordsOnPage
+    );
   };
 
   const pageElements = pages.map(item => (
@@ -47,13 +48,14 @@ const Pagination = ({totalAmountOfRecords, setRangOfRecords}) => {
       <div>
         <label htmlFor='amount'>Кількість записів на сторінці</label>
         <input
+          id='amount'
           type='number'
           min='1'
           max='100'
           step='1'
           name='amount'
           value={amountOfRecordsOnPage}
-          onChange={changeInputHandler}
+          onChange={changeAmountHandler}
         />
       </div>
       <div className={styles.pages}>{pageElements}</div>
