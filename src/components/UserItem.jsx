@@ -1,11 +1,11 @@
 import {useState} from 'react';
 import styles from './UserItem.module.css';
-import editIcon from '../assets/edit.svg';
+import EditIcon from './UI/SVG/EditIcon';
 import Modal from './UI/Modal';
 import Form from './Form';
 import {editRecord} from '../utils/firebase-api';
 
-const UserItem = ({user, refreshList}) => {
+const UserItem = ({user, refreshList, className}) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const toggleFormVisibility = () => {
     setIsFormVisible(prev => !prev);
@@ -13,7 +13,7 @@ const UserItem = ({user, refreshList}) => {
 
   return (
     <>
-      <li className={styles.row}>
+      <li className={`${styles.row} ${className}`}>
         <p>{user.numberInOrder}</p>
         <p>{user.first_name}</p>
         <p>{user.last_name}</p>
@@ -31,7 +31,7 @@ const UserItem = ({user, refreshList}) => {
           className={styles['btn-edit']}
           title='коригувати'
         >
-          <img src={editIcon} alt='коригувати' />
+          <EditIcon />
         </button>
       </li>
       {isFormVisible && (

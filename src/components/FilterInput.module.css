@@ -47,15 +47,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
-  /* border-radius: 50%; */
-  /* border: solid var(--main-color) 1px; */
 }
 
-.btn-erase img {
-  width: 10px;
-  height: 10px;
+.btn-erase svg {
+  color: var(--main-color);
+  width: 13px;
+  height: 13px;
+  stroke-width: 2px;
 }
 
 .btn-sort {

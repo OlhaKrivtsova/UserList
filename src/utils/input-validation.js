@@ -1,6 +1,10 @@
+//Set regExp for validation email
 const regExpForEmail = /[-.\w]+@([\w-]+\.)+[\w-]+/;
+
+//Set regExp for validation a phone number
 const regExpForPhone = /\+380 \(\d\d\) \d\d\d-\d\d-\d\d/;
 
+//Get age from the birth date
 const defineAgeFromBirthday = birthday => {
   const dateOfBirthday = new Date(birthday);
   const currentYear = new Date().getFullYear();
@@ -11,6 +15,8 @@ const defineAgeFromBirthday = birthday => {
   return age;
 };
 
+//Change the string with a phone number according to the mask
+//This function is not universal for any mask
 export const setMaskForPhone = string => {
   const mask = '+380 (XX) XXX-XX-XX';
   const enteredDigits = string.replace(/\+380|\D/g, '');
@@ -24,6 +30,7 @@ export const setMaskForPhone = string => {
   return newString;
 };
 
+//check if the value matches the pattern
 const validationOnRegExp = (val, labelName, regExp) => {
   const isMatched = val.trim().match(regExp);
   const isValueValid = isMatched
@@ -35,6 +42,7 @@ const validationOnRegExp = (val, labelName, regExp) => {
   };
 };
 
+//validate the value, depending on its type (input name)
 export const inputValidation = (val, inputName, labelName) => {
   let errMessage = '';
   let isValueValid = val.trim() !== '';

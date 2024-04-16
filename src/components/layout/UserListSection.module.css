@@ -2,5 +2,11 @@
   position: relative;
   padding: 24px 0;
   height: 80%;
-  /* border: solid 1px green; */
+}
+
+/* class for setting width of columns for <li.row> in UserItem and <div.row> in Filter */
+.row {
+  display: grid;
+  grid-template-columns: 50px repeat(3, 15%) repeat(2, 22%) 1fr;
+  border-radius: 3px;
 }

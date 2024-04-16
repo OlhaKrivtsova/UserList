@@ -23,13 +23,6 @@ const SectionAddUser = ({refreshList}) => {
             <Form
               refreshList={refreshList}
               toggleFormVisibility={toggleFormVisibility}
-              initialValueForInputs={{
-                first_name: '',
-                last_name: '',
-                birthday: '',
-                email: '',
-                phone: '',
-              }}
               firebaseFunction={addRecord}
               nameSubmitButton='Додати'
             />

@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import styles from './Pagination.module.css';
 
 const initialPageNumber = 1;
-const initialAmountOfRecordsOnPage = 3;
+const initialAmountOfRecordsOnPage = 10;
 
 const Pagination = ({totalAmountOfRecords, setRangOfRecords}) => {
   const [amountOfRecordsOnPage, setAmountOfRecordsOnPage] = useState(

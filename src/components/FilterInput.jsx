@@ -1,11 +1,11 @@
 import styles from './FilterInput.module.css';
-import close from '../assets/close.svg';
+import CloseIcon from './UI/SVG/CloseIcon';
 import {useEffect, useState} from 'react';
 
 const FilterInput = ({
   name,
   label,
-  changeFilter,
+  changeFilter = null,
   changeSorting = null,
   sortedName,
 }) => {
@@ -47,7 +47,7 @@ const FilterInput = ({
   return (
     <div className={styles['input-group']}>
       <div className={styles['label-row']}>
-        <label htmlFor={name}>{label}</label>
+        <label htmlFor={changeFilter ? name : false}>{label}</label>
         {changeSorting && (
           <div>
             <button
@@ -70,21 +70,23 @@ const FilterInput = ({
         )}
       </div>
 
-      <div className={styles.input}>
-        <input
-          id={name}
-          onChange={changeHandler}
-          value={inputValue}
-          type='text'
-          name={name}
-          placeholder='пошук'
-        />
-        {inputValue && (
-          <button onClick={clickHandler} className={styles['btn-erase']}>
-            <img src={close} alt='стерти' />
-          </button>
-        )}
-      </div>
+      {changeFilter && (
+        <div className={styles.input}>
+          <input
+            id={name}
+            onChange={changeHandler}
+            value={inputValue}
+            type='text'
+            name={name}
+            placeholder='пошук'
+          />
+          {inputValue && (
+            <button onClick={clickHandler} className={styles['btn-erase']}>
+              <CloseIcon />
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

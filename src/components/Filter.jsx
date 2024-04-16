@@ -1,45 +1,27 @@
 import styles from './Filter.module.css';
 import FilterInput from './FilterInput';
+import {inputOptions} from './Form';
 
-const Filter = ({changeFilter, changeSorting, sortedName}) => {
+const Filter = ({changeFilter, changeSorting, sortedName, className}) => {
+  const inputs = [];
+  for (const key in inputOptions) {
+    const input = {name: key, label: inputOptions[key].label};
+    if (inputOptions[key].sorted) {
+      input.changeSorting = changeSorting;
+      input.sortedName = sortedName;
+    }
+    if (inputOptions[key].filtered) input.changeFilter = changeFilter;
+    inputs.push(input);
+  }
+
+  const filterInputs = inputs.map(item => (
+    <FilterInput key={item.name} {...item} />
+  ));
+
   return (
-    <div className={styles.row}>
+    <div className={`${styles.row} ${className}`}>
       <div></div>
-      <FilterInput
-        changeFilter={changeFilter}
-        changeSorting={changeSorting}
-        sortedName={sortedName}
-        name='first_name'
-        label="Ім'я"
-      />
-      <FilterInput
-        changeFilter={changeFilter}
-        changeSorting={changeSorting}
-        sortedName={sortedName}
-        name='last_name'
-        label='Прізвище'
-      />
-      <FilterInput
-        changeFilter={changeFilter}
-        changeSorting={changeSorting}
-        sortedName={sortedName}
-        name='birthday'
-        label='Дата народження'
-      />
-      <FilterInput
-        changeFilter={changeFilter}
-        changeSorting={changeSorting}
-        sortedName={sortedName}
-        name='email'
-        label='Email'
-      />
-      <FilterInput
-        changeFilter={changeFilter}
-        changeSorting={changeSorting}
-        sortedName={sortedName}
-        name='phone'
-        label='Номер телефону'
-      />
+      {filterInputs}
     </div>
   );
 };

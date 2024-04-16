@@ -111,6 +111,7 @@ label {
 :root {
   --main-color: #ff5000;
   --main-transparent-color: #ff500035;
+  --main-row-color: #ff500019;
 }
 
 body {

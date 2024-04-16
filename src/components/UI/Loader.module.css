@@ -8,7 +8,7 @@
 }
 
 .lds-hourglass {
-  --color: #ff5000;
+  --color: var(--main-color);
   display: inline-block;
   position: relative;
   width: 80px;

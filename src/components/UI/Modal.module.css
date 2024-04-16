@@ -24,29 +24,25 @@
   animation: slide-down 300ms ease-out forwards;
 }
 
-/* @media (min-width: 768px) {
-  .modal {
-    width: 40rem;
-    left: calc(50% - 20rem);
-  }
-} */
-
 @keyframes slide-down {
   from {
     opacity: 0;
-    /* transform: translateY(-3rem); */
   }
   to {
     opacity: 1;
-    /* transform: translateY(0); */
   }
 }
 
 .btn-close {
-  margin: 10px;
+  margin: 15px;
   position: absolute;
   right: 0;
   top: 0;
-  width: 20px;
-  height: 20px;
+}
+
+.btn-close svg {
+  color: var(--main-color);
+  width: 15px;
+  height: 15px;
+  stroke-width: 2px;
 }

@@ -1,6 +1,6 @@
 import {useReducer, useCallback} from 'react';
 
-function httpReducer(httpState, action) {
+function httpReducer(_, action) {
   switch (action.type) {
     case 'send_request': {
       return {
@@ -44,10 +44,10 @@ function useHttp(sendRequest, isRequestSending = false) {
         const responseData = await sendRequest(requestData);
         dispatch({type: 'success', data: responseData});
       } catch (error) {
+        console.error(error);
         dispatch({
           type: 'error',
           errorMessage: 'Помилка доступу до бази даних',
-          // errorMessage: error.message || 'Something went wrong!',
         });
       }
     },

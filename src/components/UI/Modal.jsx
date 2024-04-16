@@ -1,7 +1,7 @@
 import {createPortal} from 'react-dom';
 import styles from './Modal.module.css';
-import close from '../../assets/close.svg';
 import {useState} from 'react';
+import CloseIcon from './SVG/CloseIcon';
 
 const ModalWindow = props => {
   return (
@@ -9,7 +9,7 @@ const ModalWindow = props => {
       <div className={styles.backdrop} onClick={props.onClose}></div>
       <div className={styles.modal}>
         <button className={styles['btn-close']} onClick={props.onClose}>
-          <img src={close} alt='закрити' />
+          <CloseIcon />
         </button>
         <div className={styles.content}>{props.children}</div>
       </div>
