@@ -5,21 +5,25 @@ import UserList from '../UserList';
 import styles from './UserListSection.module.css';
 import Loader from '../UI/Loader';
 import Modal from '../UI/Modal';
-import Container from '../UI/Container';
 import Filter from '../Filter';
 import Pagination from '../UI/Pagination';
 import useFilterSorting from '../../hooks/use-filter-sorting';
+import {inputOptionsForForm} from '../../utils/input-options';
 
 const SectionUserList = ({shouldRefresh, refreshList}) => {
   //send the request to Firebase and get data (the user list) or an error
   const {sendHttpRequest, data, error, status} = useHttp(getAllRecords, true);
+
   useEffect(() => {
-    sendHttpRequest();
+    const controller = {isIgnore: false};
+    sendHttpRequest(controller);
+    return () => (controller.isIgnore = true);
   }, [sendHttpRequest, shouldRefresh]);
 
   //filter and sort the user list
   const {
     sorting,
+    filter,
     usersFilteredSorted,
     changeFilterHandler,
     changeSortingHandler,
@@ -35,25 +39,28 @@ const SectionUserList = ({shouldRefresh, refreshList}) => {
 
   return (
     <section className={styles.section}>
-      <Container>
-        <Filter
-          changeFilter={changeFilterHandler}
-          changeSorting={changeSortingHandler}
-          sortedName={sorting.sortedName}
-          className={styles.row}
-        />
-        {!error && (
-          <UserList
-            users={usersFilteredSortedSliced}
-            refreshList={refreshList}
-            className={styles.row}
+      <div className={styles['table-container']}>
+        <table className={styles.table}>
+          <Filter
+            inputOptions={inputOptionsForForm}
+            changeFilter={changeFilterHandler}
+            changeSorting={changeSortingHandler}
+            sorting={sorting}
+            filter={filter}
           />
-        )}
-        <Pagination
-          totalAmountOfRecords={usersFilteredSorted.length}
-          setRangOfRecords={setRangeOfRecords}
-        />
-      </Container>
+
+          {!error && (
+            <UserList
+              users={usersFilteredSortedSliced}
+              refreshList={refreshList}
+            />
+          )}
+        </table>
+      </div>
+      <Pagination
+        totalAmountOfRecords={usersFilteredSorted.length}
+        setRangOfRecords={setRangeOfRecords}
+      />
       {status === 'pending' && <Loader />}
       {error && (
         <Modal>

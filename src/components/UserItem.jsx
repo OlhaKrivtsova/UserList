@@ -4,8 +4,9 @@ import EditIcon from './UI/SVG/EditIcon';
 import Modal from './UI/Modal';
 import Form from './Form';
 import {editRecord} from '../utils/firebase-api';
+import {inputOptionsForForm} from '../utils/input-options';
 
-const UserItem = ({user, refreshList, className}) => {
+const UserItem = ({user, refreshList}) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const toggleFormVisibility = () => {
     setIsFormVisible(prev => !prev);
@@ -13,33 +14,37 @@ const UserItem = ({user, refreshList, className}) => {
 
   return (
     <>
-      <li className={`${styles.row} ${className}`}>
-        <p>{user.numberInOrder}</p>
-        <p>{user.first_name}</p>
-        <p>{user.last_name}</p>
-        <p>
+      <tr>
+        <td>{user.numberInOrder}</td>
+        <td>{user.first_name}</td>
+        <td>{user.last_name}</td>
+        <td>
+          {' '}
           {new Date(user.birthday).toLocaleString('uk', {
             year: 'numeric',
             month: 'numeric',
             day: 'numeric',
           })}
-        </p>
-        <p>{user.email}</p>
-        <p>{user.phone}</p>
-        <button
-          onClick={toggleFormVisibility}
-          className={styles['btn-edit']}
-          title='коригувати'
-        >
-          <EditIcon />
-        </button>
-      </li>
+        </td>
+        <td>{user.email}</td>
+        <td>{user.phone}</td>
+        <td>
+          <button
+            onClick={toggleFormVisibility}
+            className={styles['btn-edit']}
+            title='коригувати'
+          >
+            <EditIcon />
+          </button>
+        </td>
+      </tr>
       {isFormVisible && (
         <Modal onClose={toggleFormVisibility}>
           <Form
+            inputOptions={inputOptionsForForm}
             refreshList={refreshList}
             toggleFormVisibility={toggleFormVisibility}
-            initialValueForInputs={{...user}}
+            initialValueForInputs={user}
             nameSubmitButton='Зберегти'
             firebaseFunction={editRecord}
           />

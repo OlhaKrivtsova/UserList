@@ -1,10 +1,10 @@
-import {useEffect, useState} from 'react';
+import {useMemo, useState} from 'react';
 import styles from './FormInput.module.css';
 import CloseIcon from './UI/SVG/CloseIcon';
+import {inputValidation} from '../utils/input-validation';
 
 const Input = ({
-  isTouched,
-  inputValidation,
+  isFormTouched,
   setMask = null,
   update,
   label,
@@ -14,22 +14,19 @@ const Input = ({
   ...props
 }) => {
   const [enteredValue, setEnteredValue] = useState(value);
-  const [isInputTouched, setIsInputTouched] = useState(isTouched);
+  const [isInputTouched, setIsInputTouched] = useState(false);
 
   const {isValueValid, errMessage} = inputValidation(enteredValue, name, label);
-  const isInputInvalid = !isValueValid && isInputTouched;
+  const isInputInvalid = !isValueValid && (isInputTouched || isFormTouched);
+
+  useMemo(
+    () => update(name, enteredValue, isValueValid),
+    [enteredValue, isValueValid, name, update]
+  );
 
   const inputClassName = `${styles.input} ${
     isInputInvalid ? styles.failed : ''
   }`;
-
-  useEffect(() => {
-    setIsInputTouched(isTouched);
-  }, [isTouched]);
-
-  useEffect(() => {
-    update(name, enteredValue, isValueValid);
-  }, [enteredValue, isValueValid, errMessage, name, update]);
 
   const changeInputHandler = event => {
     setMask
@@ -59,7 +56,12 @@ const Input = ({
           onBlur={blurInputHandler}
         />
         {enteredValue && (
-          <button onClick={eraseInputHandler} className={styles['btn-erase']}>
+          <button
+            type='button'
+            tabIndex='-1'
+            onClick={eraseInputHandler}
+            className={styles['btn-erase']}
+          >
             <CloseIcon />
           </button>
         )}

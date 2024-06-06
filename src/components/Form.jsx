@@ -2,50 +2,13 @@ import {useEffect, useState} from 'react';
 import styles from './Form.module.css';
 import Button from './UI/Button';
 import Input from './FormInput';
-import {inputValidation, setMaskForPhone} from '../utils/input-validation';
 import useHttp from '../hooks/use-http';
 import Loader from './UI/Loader';
-
-//inputOptions is also used in <Filter> to set filter and sorting
-export const inputOptions = {
-  first_name: {
-    type: 'text',
-    label: 'Ім’я',
-    sorted: true, // if should be sorted (may be omitted if shouldn't)
-    filtered: true, // if should be filtered (may be omitted if shouldn't)
-    // autoFocus: true,
-  },
-  last_name: {
-    type: 'text',
-    label: 'Прізвище',
-    sorted: true,
-    filtered: true,
-  },
-  birthday: {
-    type: 'date',
-    label: 'Дата народження',
-    sorted: true,
-    filtered: true,
-  },
-  email: {
-    type: 'email',
-    label: 'Email',
-    // sorted: true,
-    filtered: true,
-  },
-  phone: {
-    type: 'text',
-    label: 'Номер телефону',
-    // sorted: true,
-    filtered: true,
-    placeholder: '+380 (__) ___- __-__',
-    setMask: setMaskForPhone,
-  },
-};
 
 const Form = ({
   refreshList,
   toggleFormVisibility,
+  inputOptions,
   initialValueForInputs = null,
   firebaseFunction,
   nameSubmitButton,
@@ -61,7 +24,7 @@ const Form = ({
 
   const {sendHttpRequest, status, error} = useHttp(firebaseFunction);
 
-  const [areInputsTouched, setAreInputTouched] = useState(false);
+  const [isFormTouched, setIsFormTouched] = useState(false);
 
   const formData = {};
   let isFormValid = false;
@@ -85,7 +48,7 @@ const Form = ({
     event.preventDefault();
 
     if (!isFormValid) {
-      setAreInputTouched(true);
+      setIsFormTouched(true);
       return;
     }
     const newRecord = {};
@@ -110,8 +73,7 @@ const Form = ({
       key={item.name}
       {...item}
       update={updateInputHandler}
-      isTouched={areInputsTouched}
-      inputValidation={inputValidation}
+      isFormTouched={isFormTouched}
     />
   ));
 

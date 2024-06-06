@@ -1,6 +1,6 @@
 import {useReducer, useCallback} from 'react';
 
-function httpReducer(_, action) {
+function httpReducer(httpState, action) {
   switch (action.type) {
     case 'send_request': {
       return {
@@ -14,6 +14,11 @@ function httpReducer(_, action) {
         data: action.data,
         error: null,
         status: 'completed',
+      };
+    }
+    case 'cancel': {
+      return {
+        ...httpState,
       };
     }
     case 'error': {
@@ -38,11 +43,14 @@ function useHttp(sendRequest, isRequestSending = false) {
   const [httpState, dispatch] = useReducer(httpReducer, initialHttpState);
 
   const sendHttpRequest = useCallback(
-    async function (requestData) {
+    async function (requestData, controller = {isIgnore: false}) {
       dispatch({type: 'send_request'});
       try {
         const responseData = await sendRequest(requestData);
-        dispatch({type: 'success', data: responseData});
+
+        !controller.isIgnore
+          ? dispatch({type: 'success', data: responseData})
+          : dispatch({type: 'cancel'});
       } catch (error) {
         console.error(error);
         dispatch({

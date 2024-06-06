@@ -1,10 +1,10 @@
 import {useState} from 'react';
 import styles from './AddUserSection.module.css';
-import Container from '../UI/Container';
 import Button from '../UI/Button';
 import Form from '../Form';
 import Modal from '../UI/Modal';
 import {addRecord} from '../../utils/firebase-api';
+import {inputOptionsForForm} from '../../utils/input-options';
 
 const SectionAddUser = ({refreshList}) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -14,21 +14,20 @@ const SectionAddUser = ({refreshList}) => {
 
   return (
     <section className={styles.section}>
-      <Container>
-        {!isFormVisible && (
-          <Button onClick={toggleFormVisibility}>Додати користувача</Button>
-        )}
-        {isFormVisible && (
-          <Modal onClose={toggleFormVisibility}>
-            <Form
-              refreshList={refreshList}
-              toggleFormVisibility={toggleFormVisibility}
-              firebaseFunction={addRecord}
-              nameSubmitButton='Додати'
-            />
-          </Modal>
-        )}
-      </Container>
+      {!isFormVisible && (
+        <Button onClick={toggleFormVisibility}>Додати користувача</Button>
+      )}
+      {isFormVisible && (
+        <Modal onClose={toggleFormVisibility}>
+          <Form
+            inputOptions={inputOptionsForForm}
+            refreshList={refreshList}
+            toggleFormVisibility={toggleFormVisibility}
+            firebaseFunction={addRecord}
+            nameSubmitButton='Додати'
+          />
+        </Modal>
+      )}
     </section>
   );
 };

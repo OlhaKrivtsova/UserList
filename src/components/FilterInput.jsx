@@ -1,93 +1,90 @@
 import styles from './FilterInput.module.css';
 import CloseIcon from './UI/SVG/CloseIcon';
-import {useEffect, useState} from 'react';
 
 const FilterInput = ({
   name,
   label,
-  changeFilter = null,
-  changeSorting = null,
-  sortedName,
+  changeFilter,
+  changeSorting,
+  sorting,
+  filter,
 }) => {
-  const [inputValue, setInputValue] = useState('');
-  const [sorted, setSorted] = useState('');
-
   const classNameForAscendingButton = `${styles['btn-sort']} ${
-    sorted === 'asc' ? styles.active : ''
+    sorting && sorting.sortedName === name && sorting.sortOrder === 'asc'
+      ? styles.active
+      : ''
   }`;
   const classNameForDescendingButton = `${styles['btn-sort']} ${
-    sorted === 'desc' ? styles.active : ''
+    sorting && sorting.sortedName === name && sorting.sortOrder === 'desc'
+      ? styles.active
+      : ''
   }`;
 
-  useEffect(() => {
-    sortedName !== name && setSorted('');
-  }, [sortedName, name]);
-
-  const changeHandler = event => {
-    setInputValue(event.target.value);
+  const changeFilterHandler = event => {
     changeFilter(name, event.target.value);
   };
 
-  const clickHandler = () => {
-    setInputValue('');
+  const clearFilterHandler = () => {
     changeFilter(name, '');
   };
 
-  const sortHandler = sortOrder => {
-    if (sorted !== sortOrder) {
-      setSorted(sortOrder);
+  const changeSortHandler = sortOrder => {
+    if (sorting.sortedName === name && sorting.sortOrder === sortOrder) {
+      changeSorting('', '');
+    } else {
       changeSorting(name, sortOrder);
-    }
-    if (sorted === sortOrder) {
-      setSorted('');
-      changeSorting(name, '');
     }
   };
 
   return (
-    <div className={styles['input-group']}>
-      <div className={styles['label-row']}>
-        <label htmlFor={changeFilter ? name : false}>{label}</label>
-        {changeSorting && (
-          <div>
-            <button
-              onClick={() => {
-                sortHandler('asc');
-              }}
-              className={classNameForAscendingButton}
-            >
-              &darr;
-            </button>
-            <button
-              onClick={() => {
-                sortHandler('desc');
-              }}
-              className={classNameForDescendingButton}
-            >
-              &uarr;
-            </button>
+    <th>
+      <div className={styles['input-group']}>
+        <div className={styles['label-row']}>
+          <label htmlFor={changeFilter ? name : false}>{label}</label>
+          {sorting && (
+            <div className={styles['btns-sort']}>
+              <button
+                onClick={() => {
+                  changeSortHandler('asc');
+                }}
+                className={classNameForAscendingButton}
+              >
+                &darr;
+              </button>
+              <button
+                onClick={() => {
+                  changeSortHandler('desc');
+                }}
+                className={classNameForDescendingButton}
+              >
+                &uarr;
+              </button>
+            </div>
+          )}
+        </div>
+
+        {filter && (
+          <div className={styles.input}>
+            <input
+              id={name}
+              onChange={changeFilterHandler}
+              value={filter[name] || ''}
+              type='text'
+              name={name}
+              placeholder='пошук'
+            />
+            {filter[name] && (
+              <button
+                onClick={clearFilterHandler}
+                className={styles['btn-erase']}
+              >
+                <CloseIcon />
+              </button>
+            )}
           </div>
         )}
       </div>
-
-      {changeFilter && (
-        <div className={styles.input}>
-          <input
-            id={name}
-            onChange={changeHandler}
-            value={inputValue}
-            type='text'
-            name={name}
-            placeholder='пошук'
-          />
-          {inputValue && (
-            <button onClick={clickHandler} className={styles['btn-erase']}>
-              <CloseIcon />
-            </button>
-          )}
-        </div>
-      )}
-    </div>
+    </th>
   );
 };
 

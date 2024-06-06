@@ -1,12 +1,42 @@
 .section {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: space-between;
   padding: 24px 0;
-  height: 80%;
+  height: 90vh;
 }
 
-/* class for setting width of columns for <li.row> in UserItem and <div.row> in Filter */
-.row {
-  display: grid;
-  grid-template-columns: 50px repeat(3, 15%) repeat(2, 22%) 1fr;
-  border-radius: 3px;
+.table-container {
+  height: 90%;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table td,
+.table th {
+  font-weight: inherit;
+  height: 40px;
+  padding: 5px 10px;
+  border-right: solid 1px var(--main-color);
+}
+
+.table td:last-child,
+.table th:last-child {
+  border-right: none;
+  min-width: 30px;
+}
+
+.table tr:nth-child(even) {
+  background-color: var(--main-row-color);
+}
+
+.table th {
+  background-color: var(--main-transparent-color);
+  border-top: solid 1px var(--main-color);
+  border-bottom: solid 1px var(--main-color);
 }

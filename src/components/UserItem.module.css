@@ -1,20 +1,5 @@
-.row {
-  line-height: 50px;
-}
-
-.row p {
-  padding-left: 20px;
-  border-right: solid 1px var(--main-color);
-}
-
-.row:nth-child(even) {
-  background-color: var(--main-row-color);
-}
-
 .btn-edit {
-  margin: 0 10px;
-  align-self: center;
-  justify-self: end;
+  width: 25px;
   color: var(--main-color);
 }
 

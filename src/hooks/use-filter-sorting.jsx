@@ -2,7 +2,7 @@ import {useState, useMemo} from 'react';
 
 const useFilterSorting = data => {
   const [filter, setFilter] = useState({});
-  const [sorting, setSorting] = useState({});
+  const [sorting, setSorting] = useState({sortedName: '', sortOrder: ''});
 
   const changeFilterHandler = (filterName, filterValue) => {
     setFilter(prev => ({...prev, [filterName]: filterValue}));
@@ -49,12 +49,7 @@ const useFilterSorting = data => {
     const sortedUsers = [...usersFiltered];
     return sortedUsers
       .sort((left, right) => {
-        let diff;
-        if (sorting.sortedName === 'birthday')
-          diff =
-            new Date(left[sorting.sortedName]).getTime() -
-            new Date(right[sorting.sortedName]).getTime();
-        diff = left[sorting.sortedName].localeCompare(
+        const diff = left[sorting.sortedName].localeCompare(
           right[sorting.sortedName],
           'uk'
         );
@@ -70,6 +65,7 @@ const useFilterSorting = data => {
 
   return {
     sorting,
+    filter,
     usersFilteredSorted,
     changeFilterHandler,
     changeSortingHandler,

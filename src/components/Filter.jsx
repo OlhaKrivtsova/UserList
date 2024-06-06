@@ -1,16 +1,24 @@
-import styles from './Filter.module.css';
 import FilterInput from './FilterInput';
-import {inputOptions} from './Form';
 
-const Filter = ({changeFilter, changeSorting, sortedName, className}) => {
+const Filter = ({
+  inputOptions,
+  changeFilter,
+  changeSorting,
+  sorting,
+  filter,
+}) => {
   const inputs = [];
   for (const key in inputOptions) {
     const input = {name: key, label: inputOptions[key].label};
     if (inputOptions[key].sorted) {
       input.changeSorting = changeSorting;
-      input.sortedName = sortedName;
+      input.sorting = sorting;
+      input.filter = filter;
     }
-    if (inputOptions[key].filtered) input.changeFilter = changeFilter;
+    if (inputOptions[key].filtered) {
+      input.changeFilter = changeFilter;
+      input.filter = filter;
+    }
     inputs.push(input);
   }
 
@@ -19,10 +27,13 @@ const Filter = ({changeFilter, changeSorting, sortedName, className}) => {
   ));
 
   return (
-    <div className={`${styles.row} ${className}`}>
-      <div></div>
-      {filterInputs}
-    </div>
+    <thead>
+      <tr>
+        <th></th>
+        {filterInputs}
+        <th></th>
+      </tr>
+    </thead>
   );
 };
 
